@@ -18,7 +18,7 @@ public class NorthwindTraders
         dataSource.setPassword("yearup26");
 
         // Query the Database
-        String sql = "SELECT ProductName, UnitPrice FROM products";
+        String sql = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock FROM products";
 
         // Try-with-resources
         try (Connection connection = dataSource.getConnection();
@@ -27,7 +27,12 @@ public class NorthwindTraders
         {
             while (resultSet.next())
             {
-                System.out.println(resultSet.getString("ProductName"));
+                int id = resultSet.getInt("ProductID");
+                String name = resultSet.getString("ProductName");
+                double price = resultSet.getDouble("UnitPrice");
+                int stock = resultSet.getInt("UnitsInStock");
+
+                System.out.printf("%-4d %-30s %7.2f %5d%n", id, name, price, stock);
             }
         } catch (SQLException e) { e.printStackTrace(); }
     }
