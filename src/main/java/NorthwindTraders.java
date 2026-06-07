@@ -10,10 +10,11 @@ import java.util.Scanner;
 
 public class NorthwindTraders
 {
+    static BasicDataSource dataSource = new BasicDataSource();// <--- moved to class level so all methods have access.
+
     public static void main(String[] args)
     {
         // DataSource Setup
-        BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl("jdbc:mysql://localhost:3306/northwind");
         dataSource.setUsername("root");
         dataSource.setPassword("yearup26");
@@ -35,6 +36,7 @@ public class NorthwindTraders
             default: IO.println("Closing application... (beep!)");
         }
     }
+// ------------------------------------ [ Case 1: displayProducts() ] ---------------------------------------------------
 
     public static void displayProducts()
     {
@@ -53,6 +55,27 @@ public class NorthwindTraders
                 int stock = resultSet.getInt("UnitsInStock");
 
                 System.out.printf("%-4d %-30s %7.2f %5d%n", id, name, price, stock);
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+// ------------------------------------ [ Case 2: displayCustomers() ] --------------------------------------------------
+    public static void displayCustomers()
+    {
+        // Query the Database
+        String sql = "SELECT ContactName, CompanyName, City, Country, Phone FROM customers ORDER BY Country";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement= connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery())
+        {
+            while (resultSet.next())
+            {
+                String contactName = resultSet.getString("ContactName");
+                String companyName = resultSet.getString("CompanyName");
+                String city = resultSet.getString("City");
+                String country = resultSet.getString("Country");
+                String phone = resultSet.getString("Phone");
+                System.out.printf("%-20s %-20s %-20s %-20s %-20s", contactName, companyName, city, country, phone);
             }
         } catch (SQLException e) { e.printStackTrace(); }
     }
