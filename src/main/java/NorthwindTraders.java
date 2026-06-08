@@ -41,6 +41,8 @@ public class NorthwindTraders
 
     public static void displayProducts()
     {
+        IO.println();
+
         // Query the Database
         String sql = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock FROM products";
         // Try-with-resources
@@ -48,6 +50,9 @@ public class NorthwindTraders
              PreparedStatement preparedStatement= connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery())
         {
+            System.out.printf("%-4s %-35s %7s %-7s%n", "ID", "Name", "Price", "   Stock");
+            IO.println("───────────────────────────────────────────────────────────");
+
             while (resultSet.next())
             {
                 int id = resultSet.getInt("ProductID");
@@ -55,7 +60,7 @@ public class NorthwindTraders
                 double price = resultSet.getDouble("UnitPrice");
                 int stock = resultSet.getInt("UnitsInStock");
 
-                System.out.printf("\n%-4d %-30s %7.2f %5d%n", id, name, price, stock);
+                System.out.printf("%-4d %-35s %7.2f %7d%n", id, name, price, stock);
             }
         } catch (SQLException e) { e.printStackTrace(); }
     }
@@ -71,7 +76,9 @@ public class NorthwindTraders
              PreparedStatement preparedStatement= connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery())
         {
-            IO.printf("")
+            System.out.printf("%-23s %-36s %-17s %-12s %s%n", "Name", "Company", "City","Country", "Phone");
+            IO.println("───────────────────────────────────────────────────────────────────────────────────────────────────────────");
+
             while (resultSet.next())
             {
                 String contactName = resultSet.getString("ContactName");
