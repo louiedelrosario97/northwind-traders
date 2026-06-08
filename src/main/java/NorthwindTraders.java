@@ -31,7 +31,7 @@ public class NorthwindTraders
 
         switch (select)
         {
-            case 1: displayProducts(); break;
+            case 1: displayProducts();  break;
             case 2: displayCustomers(); break;
             case 0: System.exit(0);
             default: IO.println("Closing application... (beep!)");
@@ -55,10 +55,10 @@ public class NorthwindTraders
 
             while (resultSet.next())
             {
-                int id = resultSet.getInt("ProductID");
-                String name = resultSet.getString("ProductName");
+                int id =       resultSet.getInt("ProductID");
+                String name =  resultSet.getString("ProductName");
                 double price = resultSet.getDouble("UnitPrice");
-                int stock = resultSet.getInt("UnitsInStock");
+                int stock =    resultSet.getInt("UnitsInStock");
 
                 System.out.printf("%-4d %-35s %7.2f %7d%n", id, name, price, stock);
             }
@@ -83,9 +83,9 @@ public class NorthwindTraders
             {
                 String contactName = resultSet.getString("ContactName");
                 String companyName = resultSet.getString("CompanyName");
-                String city = resultSet.getString("City");
-                String country = resultSet.getString("Country");
-                String phone = resultSet.getString("Phone");
+                String city =        resultSet.getString("City");
+                String country =     resultSet.getString("Country");
+                String phone =       resultSet.getString("Phone");
                 System.out.printf("%-23s %-36s %-17s %-12s %s%n", contactName, companyName, city, country, phone);
             }
         } catch (SQLException e) { e.printStackTrace(); }
